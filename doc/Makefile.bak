@@ -1,0 +1,33 @@
+#  @author     Stephan Bourgeois <stephanb2@hotmail.com>
+#  @version    0.1
+#  @since      2013-05-15
+#  @license    MIT License
+
+CC      = g++
+CFLAGS  = -I./include
+
+#vpath %.cpp src/json
+#SRCDIR = src/json
+#OBJDIR = src/json
+PRODIR = src/json
+DYNDIR = src/dynamic-cpp
+TESTDIR = test
+
+
+protoc = $(addprefix $(PRODIR)/, decoder.o parser.o)
+dynamic = $(addprefix $(DYNDIR)/, assign.o ctor.o dynamic.o iterator.o types.o)
+
+
+test : $(protoc) $(dynamic) $(TESTDIR)/test02.cpp
+	$(CC) $(CFLAGS) -o $(TESTDIR)/$@ $^ 
+
+$(PRODIR)/%.o: $(PRODIR)/%.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+$(DYNDIR)/%.o: $(DYNDIR)/%.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+.PHONY: test clean
+clean:
+	rm $(protoc) $(dynamic)
+
