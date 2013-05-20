@@ -13,11 +13,11 @@ TESTDIR = src/test
 OBJDIR = obj
 BINDIR = bin
 
-protoc = $(addprefix $(OBJDIR)/, decoder.o parser.o)
+protoc = $(addprefix $(OBJDIR)/, decoder.o parser.o strBuilder.o stackBuilder.o)
 dynamic = $(addprefix $(OBJDIR)/, assign.o ctor.o dynamic.o iterator.o types.o)
 
 
-test : $(protoc) $(dynamic) $(TESTDIR)/test02.cpp
+test : $(protoc) $(dynamic) $(TESTDIR)/test03.cpp
 	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^
 
 $(OBJDIR)/%.o: $(PRODIR)/%.cpp

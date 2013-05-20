@@ -9,7 +9,7 @@
 #define PROTOC_JSON_PARSER_HPP
 
 #include <protoc/json/decoder.hpp>
-#include <dynamic-cpp/dynamic.h>
+#include <protoc/json/abstractBuilder.hpp>
 
 
 namespace protoc
@@ -22,14 +22,14 @@ class parser
 {
 
 public:
-    parser(const char *begin, const char *end);
+    parser(const std::string&, abstractBuilder &b);
     void test_run();
-    dynamic::var json_value() const;
+    void parse() const;
 
 private:
     mutable protoc::json::decoder _decoder;
-    dynamic::var json_array() const;
-
+    void json_array() const;
+    abstractBuilder& _builder;
 };
 
 
