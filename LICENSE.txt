@@ -1,6 +1,11 @@
-The MIT License (MIT)
+This project contains some code that is not provided under the MIT License (MIT)
 
-Copyright (c) 2013 Bjorn Reese <breese@users.sourceforge.net>
+This page lists the licenses used, names the authors, and links to the places 
+where it is used.
+------------------------------------------------------------------------------
+
+The MIT/X11 License (MIT/X11)
+
 Copyright (c) 2013 Stephan Bourgeois <stephanb2@hotmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,4 +25,68 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+
+Except as contained in this notice, the name(s) of the above copyright holders
+shall not be used in advertising or otherwise to promote the sale, use or other 
+dealings in this Software without prior written authorization.
+
+------------------------------------------------------------------------------
+The Protoc library: http://protoc.sourceforge.net/
+
+Copyright (C) 2013 Bjorn Reese <breese@users.sourceforge.net>
+
+Permission to use, copy, modify, and distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR IMPLIED
+WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED WARRANTIES OF
+MERCHANTIBILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE AUTHORS AND
+CONTRIBUTORS ACCEPT NO RESPONSIBILITY IN ANY CONCEIVABLE MANNER.
+
+
+./doc/examples:
+    builder.hpp  parser.cpp  parser.hpp
+    
+./include/protoc:
+    input_range.hpp types.hpp
+
+./include/protoc/details/input_range.ipp
+
+./include/protoc/json:
+    abstractBuilder.hpp  decoder.hpp  token.hpp
+
+./src/json:
+    decoder.cpp
+
+------------------------------------------------------------------------------
+The Dynamic C++ library: http://code.google.com/p/dynamic-cpp/
+
+Copyright (C) 2009, 2011 Ferruccio Barletta (ferruccio.barletta@gmail.com)
+
+License: MIT License (MIT)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+./include/dynamic-cpp/dynamic.h
+
+./src/dynamic-cpp:
+    assign.cpp  ctor.cpp  dynamic.cpp  iterator.cpp  types.cpp
+    
 
