@@ -14,41 +14,43 @@ using namespace dynamic;
 
 int main() {
     {
-		const std::string input = "[2, 12, [null, \"aa\", [] ] ]";
+        const std::string input = "[2, 12, [null, \"aa\", [] ] ]";
 
-		json::strBuilder build;
-		json::parser parser(input, build);
+        json::strBuilder build;
+        json::parser parser(input, build);
 
-		parser.test_run();
-		std::cout << build.result() << std::endl;
-	}
-
-    {
-		const std::string input = "[12, 2, [], 6]";
-
-		json::stackBuilder build;
-		json::parser parser(input, build);
-
-		parser.parse();
-
-		dynamic::var result = build.result();
-		std::cout << "input: " << input << std::endl;
-		//this uses the overloaded ostream operator from dynamic-cpp
-		std::cout << "parse: " << result << std::endl;
-	}
+        parser.test_run();
+        std::cout << build.result() << std::endl;
+    }
 
     {
-		const std::string input = "[2, 12, [null, \"aa\", [] ] ]";
+        const std::string input = "[12, 2, [], 6]";
 
-		json::stackBuilder build;
-		json::parser parser(input, build);
+        json::stackBuilder build;
+        json::parser parser(input, build);
 
-		parser.parse();
+        parser.parse();
 
-		dynamic::var result = build.result();
-		std::cout << "input: " << input << std::endl;
-		std::cout << "parse: "  << result << std::endl;
-	}
+        dynamic::var result = build.result();
+        std::cout << "input: " << input << std::endl;
+        //this uses the overloaded ostream operator from dynamic-cpp
+        std::cout << "parse: " << result << std::endl;
+        std::cout << "errors: " << build.errors() << std::endl;
+    }
+
+    {
+        const std::string input = "[2, 12, [null, \"aa\", [] ] ]";
+
+        json::stackBuilder build;
+        json::parser parser(input, build);
+
+        parser.parse();
+
+        dynamic::var result = build.result();
+        std::cout << "input: " << input << std::endl;
+        std::cout << "parse: "  << result << std::endl;
+        std::cout << "errors: " << build.errors() << std::endl;
+    }
 
 
     return 0;

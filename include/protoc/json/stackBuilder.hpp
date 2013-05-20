@@ -26,20 +26,20 @@ class stackBuilder : public abstractBuilder
 {
 public:
 
-	stackBuilder();     //constructor.
+    stackBuilder();     //constructor.
 
-	void on_null();
+    void on_null();
     void on_int(int);
     void on_string(const std::string& s);
-	void on_array_begin();
-	void on_array_end();
-	const dynamic::var& result() const;
+    void on_array_begin();
+    void on_array_end();
+    const dynamic::var& result() const;
+    int errors();
 
 private:
-	dynamic::var _val;
-	std::stack<dynamic::var> _stack;
-	int _errors;
-	bool _isCollection;
+    dynamic::var _val;
+    std::stack<dynamic::var> _stack;
+    int _errors;
 };
 
 

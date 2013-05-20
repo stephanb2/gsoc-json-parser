@@ -19,7 +19,7 @@ namespace json
 //
 parser::parser(const std::string& buffer, abstractBuilder &b)
     : _decoder(buffer.data(), buffer.data() + buffer.size()),
-	 _builder(b)
+     _builder(b)
 {
  
     if (_decoder.type() == json::token_eof) 
@@ -71,7 +71,7 @@ void parser::parse() const
     if (_decoder.type() == json::token_null)
     {
         _builder.on_null();
-		_decoder.next();
+        _decoder.next();
     }
     else if (_decoder.type() == json::token_integer)
     {
@@ -105,9 +105,9 @@ void parser::json_array() const
     //dynamic::var val = new_array(); // val is initialised to empty array
 
     bool empty = true;
-	_builder.on_array_begin();
+    _builder.on_array_begin();
 
-	_decoder.next(); //skip opening bracket
+    _decoder.next(); //skip opening bracket
 
     //we use negation of condition.
     //TODO: improve this for validation, this tolerates trailing or multiple commas
@@ -125,11 +125,11 @@ void parser::json_array() const
         //we have a comma, advance to the next token
         _decoder.next();
         
-    	if ((_decoder.type() != json::token_array_end) && (_decoder.type() != json::token_object_end) &&
-    	    (_decoder.type() != json::token_comma) && (_decoder.type() != json::token_colon) &&
-    	    (_decoder.type() != json::token_error) && (_decoder.type() != json::token_eof))
+        if ((_decoder.type() != json::token_array_end) && (_decoder.type() != json::token_object_end) &&
+            (_decoder.type() != json::token_comma) && (_decoder.type() != json::token_colon) &&
+            (_decoder.type() != json::token_error) && (_decoder.type() != json::token_eof))
         {
-			//read value and push it in the val array
+            //read value and push it in the val array
             parse();
         }
         else
@@ -141,7 +141,7 @@ void parser::json_array() const
     if (_decoder.type() == json::token_array_end)
     {
         _builder.on_array_end();
-		_decoder.next(); //skip closing bracket
+        _decoder.next(); //skip closing bracket
     }
     else
     {
