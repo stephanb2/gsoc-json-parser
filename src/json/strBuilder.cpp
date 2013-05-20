@@ -16,29 +16,29 @@ namespace json
 {
 
 void strBuilder::on_null() {
-	_result += "null ";
+    _result += "null ";
 }
 
 void strBuilder::on_int(int i) {
     char s[32];
-	sprintf(s, "%d ", i);
-	_result += s;
+    sprintf(s, "%d ", i);
+    _result += s;
 }
 
 void strBuilder::on_string(const std::string& s){
-	_result += +"\"" + s + "\" ";
+    _result += +"\"" + s + "\" ";
 }
 
 void strBuilder::on_array_begin() {
-	_result += "[";
+    _result += "[";
 }
 
 void strBuilder::on_array_end() {
-	_result += "] ";
+    _result += "] ";
 }
 
 const std::string& strBuilder::result() const{
-	return _result;
+    return _result;
 }
 
 } //namespace

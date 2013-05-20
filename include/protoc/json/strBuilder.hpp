@@ -23,15 +23,15 @@ class strBuilder : public abstractBuilder
 public:
     //we use the default constructor.
 
-	void on_null();
+    void on_null();
     void on_int(int);
     void on_string(const std::string& s);
-	void on_array_begin();
-	void on_array_end();
-	const std::string& result() const;
+    void on_array_begin();
+    void on_array_end();
+    const std::string& result() const;
 
 private:
-	std::string _result;
+    std::string _result;
 };
 
 
