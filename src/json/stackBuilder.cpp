@@ -53,6 +53,7 @@ void stackBuilder::on_array_end() {
 	
 	if (_stack.empty()) { 
 		_errors++;
+
 	} else if (_stack.top().is_array()) {
 		_stack.top()(_val);
 		_val = _stack.top();
