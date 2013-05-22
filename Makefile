@@ -5,6 +5,7 @@
 
 CC      = g++
 CFLAGS  = -I./include
+TESTFLAG = -lboost_unit_test_framework
 
 
 PRODIR = src/json
@@ -13,12 +14,13 @@ TESTDIR = src/test
 OBJDIR = obj
 BINDIR = bin
 
+
 protoc = $(addprefix $(OBJDIR)/, decoder.o parser.o str_builder.o stack_builder.o)
 dynamic = $(addprefix $(OBJDIR)/, assign.o ctor.o dynamic.o iterator.o types.o)
 
 
-test : $(protoc) $(dynamic) $(TESTDIR)/test03.cpp
-	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^
+test : $(protoc) $(dynamic) $(TESTDIR)/builder_test02.cpp
+	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^ $(TESTFLAG)
 
 $(OBJDIR)/%.o: $(PRODIR)/%.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
