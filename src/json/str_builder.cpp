@@ -37,9 +37,17 @@ void str_builder::on_array_end() {
     str_result += "] ";
 }
 
+/*
 const std::string& str_builder::result() const {
     return str_result;
 }
+*/
+
+std::ostream& str_builder::write_string(std::ostream& os) {
+    os << str_result;
+    return os;
+}
+
 
 } //namespace
 }

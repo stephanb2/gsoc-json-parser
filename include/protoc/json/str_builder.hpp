@@ -28,11 +28,18 @@ public:
     void on_string(const std::string& s);
     void on_array_begin();
     void on_array_end();
-    const std::string& result() const;
+    //const std::string& result() const;
+    std::ostream& write_string(std::ostream& os);
 
 private:
     std::string str_result;
 };
+
+
+/// ostream << str_result
+inline std::ostream& operator<< (std::ostream& os, str_builder& sb) { 
+    return sb.write_string(os);
+}
 
 
 } //namespace

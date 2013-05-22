@@ -20,7 +20,8 @@ int main() {
         json::parser parser(input, build);
 
         parser.test_run();
-        std::cout << build.result() << std::endl;
+        //this uses the overloaded ostream operator from str_builder
+        std::cout << build << std::endl;
     }
 
     {
