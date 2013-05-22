@@ -13,7 +13,7 @@ TESTDIR = src/test
 OBJDIR = obj
 BINDIR = bin
 
-protoc = $(addprefix $(OBJDIR)/, decoder.o parser.o strBuilder.o stackBuilder.o)
+protoc = $(addprefix $(OBJDIR)/, decoder.o parser.o str_builder.o stack_builder.o)
 dynamic = $(addprefix $(OBJDIR)/, assign.o ctor.o dynamic.o iterator.o types.o)
 
 

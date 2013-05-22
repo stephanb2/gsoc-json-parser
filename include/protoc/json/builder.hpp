@@ -18,8 +18,8 @@
  *  @license    MIT License
  */
 
-#ifndef PROTOC_JSON_ABSTRACTBUILDER_HPP
-#define PROTOC_JSON_ABSTRACTBUILDER_HPP
+#ifndef PROTOC_JSON_BUILDER_HPP
+#define PROTOC_JSON_BUILDER_HPP
 
 namespace protoc
 {
@@ -29,7 +29,7 @@ namespace json
 
 // abstract builder
 //
-class abstractBuilder
+class builder
 {
 public:
     virtual void on_null() = 0;
@@ -43,4 +43,4 @@ public:
 } //namespace
 }
 
-#endif /* PROTOC_JSON_ABSTRACTBUILDER_HPP */
+#endif /* PROTOC_JSON_BUILDER_HPP */

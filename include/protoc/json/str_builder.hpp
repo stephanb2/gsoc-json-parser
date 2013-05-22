@@ -5,10 +5,10 @@
  *  @license    MIT License
  */
 
-#ifndef PROTOC_JSON_STRBUILDER_HPP
-#define PROTOC_JSON_STRBUILDER_HPP
+#ifndef PROTOC_JSON_STR_BUILDER_HPP
+#define PROTOC_JSON_STR_BUILDER_HPP
 
-#include <protoc/json/abstractBuilder.hpp>
+#include <protoc/json/builder.hpp>
 #include <string>
 
 namespace protoc
@@ -18,7 +18,7 @@ namespace json
 
 // Concrete Builder
 //
-class strBuilder : public abstractBuilder
+class str_builder : public builder
 {
 public:
     //we use the default constructor.
@@ -31,11 +31,11 @@ public:
     const std::string& result() const;
 
 private:
-    std::string _result;
+    std::string str_result;
 };
 
 
 } //namespace
 }
 
-#endif /* PROTOC_JSON_STRBUILDER_HPP */
+#endif /* PROTOC_JSON_STR_BUILDER_HPP */

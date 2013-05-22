@@ -6,8 +6,8 @@
  */
 
 #include <protoc/json/parser.hpp>
-#include <protoc/json/stackBuilder.hpp>
-#include <protoc/json/strBuilder.hpp>
+#include <protoc/json/stack_builder.hpp>
+#include <protoc/json/str_builder.hpp>
 
 using namespace protoc;
 using namespace dynamic;
@@ -16,7 +16,7 @@ int main() {
     {
         const std::string input = "[2, 12, [null, \"aa\", [] ] ]";
 
-        json::strBuilder build;
+        json::str_builder build;
         json::parser parser(input, build);
 
         parser.test_run();
@@ -26,7 +26,7 @@ int main() {
     {
         const std::string input = "[12, 2, [], 6]";
 
-        json::stackBuilder build;
+        json::stack_builder build;
         json::parser parser(input, build);
 
         parser.parse();
@@ -41,7 +41,7 @@ int main() {
     {
         const std::string input = "[2, 12, [null, \"aa\", [] ] ]";
 
-        json::stackBuilder build;
+        json::stack_builder build;
         json::parser parser(input, build);
 
         parser.parse();

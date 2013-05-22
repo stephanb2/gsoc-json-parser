@@ -17,12 +17,12 @@ namespace json
 
 // constructor
 //
-parser::parser(const std::string& buffer, abstractBuilder &b)
-    : _decoder(buffer.data(), buffer.data() + buffer.size()),
-     _builder(b)
+parser::parser(const std::string& buffer, builder &b)
+    : decode(buffer.data(), buffer.data() + buffer.size()),
+     build(b)
 {
  
-    if (_decoder.type() == json::token_eof) 
+    if (decode.type() == json::token_eof) 
     {
         std::cout << "init eof" << std::endl;
     }
@@ -34,25 +34,25 @@ parser::parser(const std::string& buffer, abstractBuilder &b)
 
 void parser::test_run() {
 
-    while (_decoder.type() != json::token_eof) 
+    while (decode.type() != json::token_eof) 
     {
-        if (_decoder.type() == json::token_integer) 
+        if (decode.type() == json::token_integer) 
         {
-             _builder.on_int((int) _decoder.get_integer());
+             build.on_int((int) decode.get_integer());
         } 
-        else if (_decoder.type() == json::token_string) 
+        else if (decode.type() == json::token_string) 
         {
-             _builder.on_string(_decoder.get_string());
+             build.on_string(decode.get_string());
         } 
-        else if (_decoder.type() == json::token_array_begin) 
+        else if (decode.type() == json::token_array_begin) 
         {
-             _builder.on_array_begin();
+             build.on_array_begin();
         }
-        else if (_decoder.type() == json::token_array_end)
+        else if (decode.type() == json::token_array_end)
         {
-             _builder.on_array_end();
+             build.on_array_end();
         }
-        _decoder.next();
+        decode.next();
     }
 
 }
@@ -61,33 +61,34 @@ void parser::test_run() {
 //  BNF production:
 //  Value = ( string | int64_t | double | Object | Array | true | false | null )
 //  
-//  will advance to the next token when it reads a ( string | number | bool | null )
+//  advances to the next token when it reads a ( string | number | bool | null )
 //
-void parser::parse() const
+void parser::parse()
 {
-    //using namespace dynamic;
-    //dynamic::var val; // val is initialised to null
-
-    if (_decoder.type() == json::token_null)
+    //build value is initialised to null
+    
+    switch (decode.type())
     {
-        _builder.on_null();
-        _decoder.next();
-    }
-    else if (_decoder.type() == json::token_integer)
-    {
+    case json::token_null :
+        build.on_null();
+        decode.next();
+        break;
+        
+    case json::token_integer :
         //FIXME: dynamic-cpp needs to accept int64_t instead of int
         //this is using the overloaded assignment operator from dynamic-cpp
-        _builder.on_int((int) _decoder.get_integer());
-        _decoder.next();
-    }
-    else if (_decoder.type() == json::token_string)
-    {
-        _builder.on_string(_decoder.get_string());
-        _decoder.next();
-    }
-    else if (_decoder.type() == json::token_array_begin)
-    {
+        build.on_int((int) decode.get_integer());
+        decode.next();
+        break;
+
+    case json::token_string :
+        build.on_string(decode.get_string());
+        decode.next();
+        break;
+    
+    case json::token_array_begin :
         json_array();
+        break;
     }
     
 }
@@ -99,35 +100,35 @@ void parser::parse() const
 //  Array = "[" ( | Value {"," Value}) "]"
 //TODO: error recovery
 //
-void parser::json_array() const
+void parser::json_array()
 {
-    //using namespace dynamic;
-    //dynamic::var val = new_array(); // val is initialised to empty array
+    
+    //build value is initialised to empty array
 
     bool empty = true;
-    _builder.on_array_begin();
+    build.on_array_begin();
 
-    _decoder.next(); //skip opening bracket
+    decode.next(); //skip opening bracket
 
     //we use negation of condition.
     //TODO: improve this for validation, this tolerates trailing or multiple commas
-    if ((_decoder.type() != json::token_array_end) && (_decoder.type() != json::token_object_end) &&
-        (_decoder.type() != json::token_comma) && (_decoder.type() != json::token_colon) &&
-        (_decoder.type() != json::token_error) && (_decoder.type() != json::token_eof))
+    if ((decode.type() != json::token_array_end) && (decode.type() != json::token_object_end) &&
+        (decode.type() != json::token_comma) && (decode.type() != json::token_colon) &&
+        (decode.type() != json::token_error) && (decode.type() != json::token_eof))
     {
         //read value and push it in the val array
         parse();
         empty = false;
     }
 
-    while (!empty && (_decoder.type() == json::token_comma))
+    while (!empty && (decode.type() == json::token_comma))
     {
         //we have a comma, advance to the next token
-        _decoder.next();
+        decode.next();
         
-        if ((_decoder.type() != json::token_array_end) && (_decoder.type() != json::token_object_end) &&
-            (_decoder.type() != json::token_comma) && (_decoder.type() != json::token_colon) &&
-            (_decoder.type() != json::token_error) && (_decoder.type() != json::token_eof))
+        if ((decode.type() != json::token_array_end) && (decode.type() != json::token_object_end) &&
+            (decode.type() != json::token_comma) && (decode.type() != json::token_colon) &&
+            (decode.type() != json::token_error) && (decode.type() != json::token_eof))
         {
             //read value and push it in the val array
             parse();
@@ -138,10 +139,10 @@ void parser::json_array() const
         }
     }
 
-    if (_decoder.type() == json::token_array_end)
+    if (decode.type() == json::token_array_end)
     {
-        _builder.on_array_end();
-        _decoder.next(); //skip closing bracket
+        build.on_array_end();
+        decode.next(); //skip closing bracket
     }
     else
     {

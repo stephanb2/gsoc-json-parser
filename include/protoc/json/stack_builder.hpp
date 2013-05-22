@@ -5,13 +5,13 @@
  *  @license    MIT License
  */
 
-#ifndef PROTOC_JSON_STACKBUILDER_HPP
-#define PROTOC_JSON_STACKBUILDER_HPP
+#ifndef PROTOC_JSON_STACK_BUILDER_HPP
+#define PROTOC_JSON_STACK_BUILDER_HPP
 
 #include <stack>
 #include <string>
 
-#include <protoc/json/abstractBuilder.hpp>
+#include <protoc/json/builder.hpp>
 #include <dynamic-cpp/dynamic.h>
 
 
@@ -22,11 +22,11 @@ namespace json
 
 // Concrete Builder
 //
-class stackBuilder : public abstractBuilder
+class stack_builder : public builder
 {
 public:
 
-    stackBuilder();     //constructor.
+    stack_builder();     //constructor.
 
     void on_null();
     void on_int(int);
@@ -37,13 +37,13 @@ public:
     int errors();
 
 private:
-    dynamic::var _val;
-    std::stack<dynamic::var> _stack;
-    int _errors;
+    dynamic::var value;
+    std::stack<dynamic::var> scope;
+    int error_count;
 };
 
 
 } //namespace
 }
 
-#endif /* PROTOC_JSON_STACKBUILDER_HPP */
+#endif /* PROTOC_JSON_STACK_BUILDER_HPP */
