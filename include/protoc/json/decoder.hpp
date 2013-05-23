@@ -35,11 +35,7 @@ class decoder
 public:
     typedef input_range::value_type value_type;
 
-    //SB add default constructor ?
-    //decoder() { };
     decoder(const char *begin, const char *end);
-    //void init(const char *begin, const char *end);
-    //SB end
 
     token type() const;
     void next();

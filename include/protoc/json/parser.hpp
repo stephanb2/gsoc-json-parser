@@ -29,6 +29,8 @@ public:
 private:
     mutable protoc::json::decoder decode;
     void json_array();
+    void json_object();
+    void key_value_pair();
     builder& build;
 };
 

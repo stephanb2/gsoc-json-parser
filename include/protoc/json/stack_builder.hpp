@@ -31,14 +31,20 @@ public:
     void on_null();
     void on_int(int);
     void on_string(const std::string& s);
+    void on_key(const std::string& s);   
+    
     void on_array_begin();
     void on_array_end();
+    void on_object_begin();
+    void on_object_end();
+    
     const dynamic::var& result() const;
     int errors();
 
 private:
     dynamic::var value;
     std::stack<dynamic::var> scope;
+    std::stack<dynamic::var> keys;
     int error_count;
 };
 

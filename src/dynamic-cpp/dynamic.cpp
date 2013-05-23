@@ -349,7 +349,7 @@ namespace dynamic {
     }
 
     ///
-    /// write a collection to an ostream    //TODO:add maps
+    /// write a collection to an ostream    //FIXME:test maps
     ///
     ostream& var::_write_collection(ostream& os) {
         assert(is_collection());
@@ -359,12 +359,13 @@ namespace dynamic {
             case type_array : os << "["; break;
             case type_set : os << "{"; break;
             case type_dict : os << "<"; break;
+            case type_map : os << "{"; break; //SB
             default : assert(false);
         }
         for (var::iterator vi = begin(); vi != end(); ++vi) {
             if (vi != begin()) os << " ";
             (*vi)._write_var(os);
-            if (get_type() == type_dict) {
+            if (get_type() == type_dict || get_type() == type_map) { //SB
                 os << ":";
                 (*this)[*vi]._write_var(os);
             }
@@ -375,6 +376,7 @@ namespace dynamic {
             case type_array : os << "]"; break;
             case type_set : os << "}"; break;
             case type_dict : os << ">"; break;
+            case type_map : os << "}"; break; //SB
             default : assert(false);
         }
         return os;
@@ -422,7 +424,7 @@ namespace dynamic {
     }
 
     ///
-    /// write a wide string to a wostream  //TODO:add maps
+    /// write a wide string to a wostream
     ///
     wostream& var::_write_wstring(wostream& os) {
         assert(is_wstring());
@@ -445,7 +447,7 @@ namespace dynamic {
     }
     
     ///
-    /// write a collection to a wostream
+    /// write a collection to a wostream   //TODO:add maps
     ///
     wostream& var::_write_collection(wostream& os) {
         assert(is_collection());

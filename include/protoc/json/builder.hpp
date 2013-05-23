@@ -35,9 +35,12 @@ public:
     virtual void on_null() = 0;
     virtual void on_int(int) = 0;
     virtual void on_string(const std::string&) = 0;
+    virtual void on_key(const std::string&) = 0;
 
     virtual void on_array_begin() = 0;
     virtual void on_array_end() = 0;
+    virtual void on_object_begin() = 0;
+    virtual void on_object_end() = 0;   
 };
 
 } //namespace

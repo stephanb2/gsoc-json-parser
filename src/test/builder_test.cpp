@@ -5,7 +5,7 @@
  *  @license    MIT License
  */
  
-#include <protoc/json/parser.hpp>
+//#include <protoc/json/parser.hpp>
 #include <protoc/json/stack_builder.hpp>
 #include <protoc/json/str_builder.hpp>
 
@@ -108,6 +108,111 @@ BOOST_AUTO_TEST_CASE (stack_builder_array_nested) {
 }
 
 
+BOOST_AUTO_TEST_CASE (stack_builder_null_object) {
+
+    std::stringstream ss;
+    json::stack_builder build;
+
+    build.on_object_begin();
+    build.on_object_end();
+
+    dynamic::var result = build.result();
+    ss << result;
+
+    BOOST_CHECK_EQUAL(result.type(), "dict");
+    BOOST_CHECK_EQUAL(ss.str(), "<>");
+}
+
+BOOST_AUTO_TEST_CASE (stack_builder_object) {
+
+    std::stringstream ss;
+    json::stack_builder build;
+
+    build.on_object_begin();
+    build.on_key("a");
+    build.on_int(6);
+    build.on_key("b");
+    build.on_null();
+    build.on_key("c");
+    build.on_string("foo");    
+    build.on_object_end();
+
+    dynamic::var result = build.result();
+    ss << result;
+
+    BOOST_CHECK_EQUAL(result.type(), "dict");
+    BOOST_CHECK_EQUAL(ss.str(), "<'a':6 'b':$ 'c':'foo'>");
+}
+
+
+BOOST_AUTO_TEST_CASE (stack_builder_obj_in_array) {
+
+    std::stringstream ss;
+    json::stack_builder build;
+
+    build.on_array_begin();
+    build.on_int(2);
+    build.on_object_begin();
+    build.on_key("a");
+    build.on_int(12);
+    build.on_object_end();
+    build.on_array_end();   
+
+    dynamic::var result = build.result();
+    ss << result;
+
+    BOOST_CHECK_EQUAL(result.type(), "array");
+    BOOST_CHECK_EQUAL(result[1].type(), "dict");    
+    BOOST_CHECK_EQUAL(ss.str(), "[2 <'a':12>]");
+}
+
+
+BOOST_AUTO_TEST_CASE (stack_builder_array_in_obj) {
+
+    std::stringstream ss;
+    json::stack_builder build;
+
+    build.on_object_begin();
+    build.on_key("a");
+    build.on_array_begin();
+    build.on_int(2);
+    build.on_int(12);
+    build.on_array_end();
+    build.on_object_end();
+
+    dynamic::var result = build.result();
+    ss << result;
+
+    BOOST_CHECK_EQUAL(result.type(), "dict");
+    BOOST_CHECK_EQUAL(result["a"].type(), "array");    
+    BOOST_CHECK_EQUAL(ss.str(), "<'a':[2 12]>");
+}
+
+BOOST_AUTO_TEST_CASE (stack_builder_nested_obj) {
+
+    std::stringstream ss;
+    json::stack_builder build;
+
+    build.on_object_begin();
+    build.on_key("root");
+    build.on_object_begin();
+    build.on_key("a");
+    build.on_int(2);
+    build.on_object_end();
+    build.on_object_end();
+
+    dynamic::var result = build.result();
+    ss << result;
+
+    BOOST_CHECK_EQUAL(result.type(), "dict");
+    BOOST_CHECK_EQUAL(result["root"].type(), "dict");    
+    BOOST_CHECK_EQUAL(ss.str(), "<'root':<'a':2>>");
+}
+
+
+
+/*
+
 BOOST_AUTO_TEST_CASE (parse_int) {
     
     const std::string input = "12";
@@ -182,4 +287,6 @@ BOOST_AUTO_TEST_CASE (parse_array_nested) {
     
     BOOST_CHECK_EQUAL(ss.str(), "[12 $ [2 []] 'a']");
 }
+
+*/
 

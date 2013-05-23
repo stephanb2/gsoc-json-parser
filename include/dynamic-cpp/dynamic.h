@@ -222,8 +222,8 @@ namespace dynamic {
 
         /// var comparison functor
         struct less_var {
-            /// var comparison function
-            bool operator () (const var& lhs, const var& rhs);
+        /// var comparison function
+        bool operator () (const var& lhs, const var& rhs);
         };
 
         /// list type
@@ -251,6 +251,8 @@ namespace dynamic {
             iterator(set_t::iterator iter) : _iter(iter) {}
             /// initialize from dictr iterator
             iterator(dict_t::iterator iter) : _iter(iter) {}
+            /// initialize from map iterator
+            iterator(map_t::iterator iter) : _iter(iter) {}   //SB         
 
             iterator operator++();
             iterator operator++(int);
@@ -265,8 +267,10 @@ namespace dynamic {
 
         private :
             // make sure base_type and the variant list for iter_t always match
-            enum base_type { list_type = 0, array_type, set_type, dict_type };
-            typedef variant<list_t::iterator, array_t::iterator, set_t::iterator, dict_t::iterator> iter_t;
+            //SB added map_type, map_t::iterator
+            enum base_type { list_type = 0, array_type, set_type, dict_type, map_type };
+            typedef variant<list_t::iterator, array_t::iterator, set_t::iterator, 
+                dict_t::iterator, map_t::iterator> iter_t;
 
             iter_t _iter;
         };
@@ -287,6 +291,8 @@ namespace dynamic {
             reverse_iterator(set_t::reverse_iterator riter) : _riter(riter) {}
             /// initialize from dict reverse iterator
             reverse_iterator(dict_t::reverse_iterator riter) : _riter(riter) {}
+            /// initialize from dict reverse iterator
+            reverse_iterator(map_t::reverse_iterator riter) : _riter(riter) {}  //SB
 
             reverse_iterator operator++();
             reverse_iterator operator++(int);
@@ -299,8 +305,9 @@ namespace dynamic {
 
         private :
             // make sure base_type and the variant list for riter_t always match
-            enum base_type { list_type = 0, array_type, set_type, dict_type };
-            typedef variant<list_t::reverse_iterator, array_t::reverse_iterator, set_t::reverse_iterator, dict_t::reverse_iterator> riter_t;
+            //SB added map_type, map_t::iterator
+            enum base_type { list_type = 0, array_type, set_type, dict_type, map_type };
+            typedef variant<list_t::reverse_iterator, array_t::reverse_iterator, set_t::reverse_iterator, dict_t::reverse_iterator, map_t::reverse_iterator> riter_t;
 
             riter_t _riter;
         };
@@ -344,7 +351,8 @@ namespace dynamic {
         var(dict_ptr _dict);
         var(map_ptr _map); //SB map constructor
 
-        typedef variant<null_t, int_t, double_t, string_t, wstring_t, list_ptr, array_ptr, set_ptr, dict_ptr, map_ptr> var_t; //SB
+        typedef variant<null_t, int_t, double_t, string_t, wstring_t, list_ptr, 
+            array_ptr, set_ptr, dict_ptr, map_ptr> var_t; //SB
 
         type_t get_type() const;
 

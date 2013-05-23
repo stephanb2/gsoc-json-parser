@@ -18,9 +18,13 @@ BINDIR = bin
 protoc = $(addprefix $(OBJDIR)/, decoder.o parser.o str_builder.o stack_builder.o)
 dynamic = $(addprefix $(OBJDIR)/, assign.o ctor.o dynamic.o iterator.o types.o)
 
+all: builder_test parser_test
 
-test : $(protoc) $(dynamic) $(TESTDIR)/builder_test02.cpp
+builder_test : $(protoc) $(dynamic) $(TESTDIR)/builder_test.cpp
 	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^ $(TESTFLAG)
+	
+parser_test : $(protoc) $(dynamic) $(TESTDIR)/parser_test.cpp
+	$(CC) $(CFLAGS) -o $(BINDIR)/$@ $^ $(TESTFLAG)	
 
 $(OBJDIR)/%.o: $(PRODIR)/%.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
@@ -28,7 +32,7 @@ $(OBJDIR)/%.o: $(PRODIR)/%.cpp
 $(OBJDIR)/%.o: $(DYNDIR)/%.cpp
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-.PHONY: test clean
+.PHONY: builder_test parser_test clean
 
 clean:
 	rm $(protoc) $(dynamic)

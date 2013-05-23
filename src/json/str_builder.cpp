@@ -29,12 +29,25 @@ void str_builder::on_string(const std::string& s){
     str_result += +"\"" + s + "\" ";
 }
 
+void str_builder::on_key(const std::string& s){
+    str_result += +"\"" + s + "\": ";
+}
+
+
 void str_builder::on_array_begin() {
     str_result += "[";
 }
 
 void str_builder::on_array_end() {
     str_result += "] ";
+}
+
+void str_builder::on_object_begin() {
+    str_result += "{";
+}
+
+void str_builder::on_object_end() {
+    str_result += "} ";
 }
 
 /*

@@ -211,25 +211,13 @@ namespace protoc
 namespace json
 {
 
-//SB
-
-decoder::decoder(const char *begin,
+decoder::decoder(const char *begin, 
                  const char *end)
     : input(begin, end)
 {
     current.type = token_eof;
     next();
 }
-
-/*
-void decoder::init(const char *begin, const char *end)
-{
-    input(begin, end);
-    current.type = token_eof;
-    next();
-}
-*/
-//SB end
 
 token decoder::type() const
 {

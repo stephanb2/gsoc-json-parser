@@ -41,6 +41,7 @@ namespace dynamic {
             case type_array :   return get<array_ptr>(_var)->begin();
             case type_set :     return get<set_ptr>(_var)->begin();
             case type_dict :    return get<dict_ptr>(_var)->begin();
+            case type_map :     return get<map_ptr>(_var)->begin(); //SB
             default :           throw exception("unhandled .begin() operation");
         }
     }
@@ -59,6 +60,7 @@ namespace dynamic {
             case type_array :   return get<array_ptr>(_var)->end();
             case type_set :     return get<set_ptr>(_var)->end();
             case type_dict :    return get<dict_ptr>(_var)->end();
+            case type_map :     return get<map_ptr>(_var)->end(); //SB
             default :           throw exception("unhandled .end() operation");
         }
     }
@@ -72,6 +74,7 @@ namespace dynamic {
             case array_type :   return ++get<array_t::iterator&>(_iter);
             case set_type :     return ++get<set_t::iterator&>(_iter);
             case dict_type :    return ++get<dict_t::iterator&>(_iter);
+            case map_type :     return ++get<map_t::iterator&>(_iter); //SB
             default :           throw exception("unhandled ++iter");
         }
     }
@@ -85,6 +88,7 @@ namespace dynamic {
             case array_type :   return get<array_t::iterator&>(_iter)++;
             case set_type :     return get<set_t::iterator&>(_iter)++;
             case dict_type :    return get<dict_t::iterator&>(_iter)++;
+            case map_type :     return get<map_t::iterator&>(_iter)++; //SB
             default :           throw exception("unhandled iter++");
         }
     }
@@ -98,6 +102,7 @@ namespace dynamic {
             case array_type :   return --get<array_t::iterator&>(_iter);
             case set_type :     return --get<set_t::iterator&>(_iter);
             case dict_type :    return --get<dict_t::iterator&>(_iter);
+            case map_type :     return --get<map_t::iterator&>(_iter); //SB
             default :           throw exception("unhandled --iter");
         }
     }
@@ -110,7 +115,10 @@ namespace dynamic {
             case list_type :    return get<list_t::iterator&>(_iter)--;
             case array_type :   return get<array_t::iterator&>(_iter)--;
             case set_type :     return get<set_t::iterator&>(_iter)--;
-            case dict_type :    return get<dict_t::iterator&>(_iter)++;
+            //case dict_type :    return get<dict_t::iterator&>(_iter)++;
+            //SB bug here ?
+            case dict_type :    return get<dict_t::iterator&>(_iter)--;
+            case map_type :     return get<map_t::iterator&>(_iter)--;
             default :           throw exception("unhandled iter--");
         }
     }
@@ -141,10 +149,15 @@ namespace dynamic {
             case array_type :   return *get<array_t::iterator>(_iter);
             case set_type :     return const_cast<var&>(*get<set_t::iterator>(_iter));
             case dict_type :    return const_cast<var&>(get<dict_t::iterator>(_iter)->first);
+            //TODO: this cannot work. and therefore map implementation may be pointless
+            // case map_type :     return const_cast<var&>(get<map_t::iterator>(_iter)->first); //SB
             default :           throw exception("unhandled *iter");
         }
     }
 
+
+    //TODO: continue map_type implementation from here //SB
+    
     ///
     /// @return reverse_iterator to last item in collection
     ///

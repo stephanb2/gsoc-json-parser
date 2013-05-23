@@ -26,8 +26,13 @@ public:
     void on_null();
     void on_int(int);
     void on_string(const std::string& s);
+    void on_key(const std::string& s);    
+    
     void on_array_begin();
     void on_array_end();
+    void on_object_begin();
+    void on_object_end();
+    
     //const std::string& result() const;
     std::ostream& write_string(std::ostream& os);
 

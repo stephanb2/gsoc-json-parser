@@ -59,7 +59,7 @@ void parser::test_run() {
 
 
 //  BNF production:
-//  Value = ( string | int64_t | double | Object | Array | true | false | null )
+//  Value = ( string | int64_t | double | Object | Array | true | false | null ).
 //  
 //  advances to the next token when it reads a ( string | number | bool | null )
 //
@@ -89,6 +89,10 @@ void parser::parse()
     case json::token_array_begin :
         json_array();
         break;
+        
+    case json::token_object_begin :
+        json_object();
+        break;
     }
     
 }
@@ -97,7 +101,7 @@ void parser::parse()
 
 
 //  BNF production:
-//  Array = "[" ( | Value {"," Value}) "]"
+//  Array = "[" ( | Value {"," Value}) "]".
 //TODO: error recovery
 //
 void parser::json_array()
@@ -116,7 +120,7 @@ void parser::json_array()
         (decode.type() != json::token_comma) && (decode.type() != json::token_colon) &&
         (decode.type() != json::token_error) && (decode.type() != json::token_eof))
     {
-        //read value and push it in the val array
+        //read value and push it in the builder stack
         parse();
         empty = false;
     }
@@ -130,12 +134,12 @@ void parser::json_array()
             (decode.type() != json::token_comma) && (decode.type() != json::token_colon) &&
             (decode.type() != json::token_error) && (decode.type() != json::token_eof))
         {
-            //read value and push it in the val array
+            //read value and push it in the builder stack
             parse();
         }
         else
         {
-            std::cout << "value missing in array" << std::endl;
+            std::cout << "unexpected symbol in array" << std::endl;
         }
     }
 
@@ -150,6 +154,95 @@ void parser::json_array()
     }
 
 }
+
+
+//  BNF production:
+//  Object = "{" ( | string ":" Value {"," string ":" Value}) "}".
+//
+//  we use this derivation:
+//  Object = "{" ( | Pair {"," Pair}) "}".
+//  Pair = string ":" Value.
+
+void parser::key_value_pair()
+{
+    // read key
+    //TODO: check for duplicate keys, or overwrite existing element ?
+    if (decode.type() == json::token_string)
+    {
+        //read value and push it in the builder stack
+        build.on_key(decode.get_string());
+        decode.next();
+    }
+    else
+    {
+        std::cout << "string expected for object key" << std::endl;
+    }
+    
+    // read colon
+    if (decode.type() == json::token_colon)
+    {
+        decode.next(); //skip colon
+    }
+    else
+    {
+        std::cout << "missing colon after object key" << std::endl;
+    }
+    
+    // read value
+    // we use negation of condition.
+    if ((decode.type() != json::token_array_end) && (decode.type() != json::token_object_end) &&
+        (decode.type() != json::token_comma) && (decode.type() != json::token_colon) &&
+        (decode.type() != json::token_error) && (decode.type() != json::token_eof))
+    {
+        //read value and push it in the builder stack
+        parse();
+    }
+    else
+    {
+        std::cout << "unexpected object value" << std::endl;
+    }
+   
+}
+
+
+//  BNF production:
+//  Object = "{" ( | Pair {"," Pair}) "}".
+//TODO: error recovery
+//
+void parser::json_object()
+{
+    
+    //build value is initialised to empty object
+    bool empty = true;
+    build.on_object_begin();
+
+    decode.next(); //skip opening brace
+    
+    if (decode.type() != json::token_object_end)
+    {
+        key_value_pair();
+        empty = false;
+    }
+
+    while (!empty && (decode.type() == json::token_comma))
+    {
+        //we have a comma, advance to the next token
+        decode.next();
+        key_value_pair();
+    }
+
+    if (decode.type() == json::token_object_end)
+    {
+        build.on_object_end();
+        decode.next(); //skip closing brace
+    }
+    else
+    {
+        std::cout << "mising end of object symbol" << std::endl;
+    }
+
+}
+
 
 
 } //namespace
