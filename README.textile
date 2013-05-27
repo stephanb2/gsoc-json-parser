@@ -17,7 +17,7 @@ h2. Thanks
 
 p. A big thanks to Bjorn Reese for his support and advice during this prototype development.
 
-h3. Building
+h2. Building
 
 p. The required parts of dynamic-cpp and protoc are included in the repository. The Boost library is required, @Boost.Test@ is used for Unit Tests.
 
