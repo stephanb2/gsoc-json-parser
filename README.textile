@@ -16,13 +16,16 @@ p. We are using the JSON scanner from the "protoc library":http://sourceforge.ne
 
 p. You can have an overview of the API by looking at the "unit tests":src/test/parser_test.cpp
 
+
 h2. Thanks
 
 p. A big thanks to Bjorn Reese for his mentoring and support during this prototype development.
 
 h2. Build
 
-p. The required parts of dynamic-cpp and protoc are included in the repository. The Boost library is required, @Boost.Test@ is used for Unit Tests.
+Dependencies: Boost and Boost.Test. On Debian, this is provided by the packages @libboost1.48-dev@ and @libboost-test1.48.0@
+
+p. The required parts of dynamic-cpp and protoc are included in the repository.
 
 p. The Makefile is incomplete, you will need to create a @bin/@ and an @obj/@ folder in the project. Build has only been tested with g++ on a Linux environment. CMake is coming soon...
 
