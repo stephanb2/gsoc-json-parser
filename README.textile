@@ -8,20 +8,19 @@ p. JSON parsing is a simple yet practical application of complier design. In thi
 
 h2. Overview
 
-p. The current implementation uses a Builder pattern to separate "code generation" from parsing.
-In our case, "code generation" is the creation of a data structure that reflects JSON arrays and objects and the assignment of JSON values into the data structure. 
+p. The current implementation uses a Builder pattern to separate "code generation" from parsing. In our case, "code generation" is the creation of a data structure that reflects JSON arrays and objects and the assignment of JSON values into the data structure. 
 
-p. Representation of JSON data in C++ is an interesting challenge, we use the "Dynamic C++ library":http://code.google.com/p/dynamic-cpp/ as our data structure and Tree API. JSON arrays are represented by arrays, and JSON objects are represented by hashmaps.
+p. Representation of JSON data in C++ is an interesting challenge, we use the "Dynamic C++ library":http://code.google.com/p/dynamic-cpp/ to represent dynamically typed data. JSON arrays are represented by arrays, and objects are represented by hashmaps.
 
 p. We are using the JSON scanner from the "protoc library":http://sourceforge.net/p/protoc/wiki/Home/ as a Lexer.
 
-p. You can have an overview of the API by looking at the "unit tests":"gsoc-json-parser/tree/master/src/test/parser_test.cpp"
+p. You can have an overview of the API by looking at the "unit tests":gsoc-json-parser/tree/master/src/test/parser_test.cpp
 
 h2. Thanks
 
-p. A big thanks to Bjorn Reese for his support and advice during this prototype development.
+p. A big thanks to Bjorn Reese for his mentoring and support during this prototype development.
 
-h2. Building
+h2. Build
 
 p. The required parts of dynamic-cpp and protoc are included in the repository. The Boost library is required, @Boost.Test@ is used for Unit Tests.
 
