@@ -1,17 +1,21 @@
 h1. C++ JSON Parser Prototype
 
-p. This JSON Parser prototype was written as part of a proposal for the Boost C++ library for The Google Summer of Code 2013
-
 h2. Motivation
 
-p. JSON parsing is a simple yet practical application of complier design. In this implementation we are parsing a subset of the JSON data types into a tree API with a recursive descent parser.
+p. This JSON parser prototype was written as part of a proposal for the Boost C++ library for The Google Summer of Code 2013.
+
+p. JSON parsing is a simple yet practical application of complier design. In this implementation we are parsing a subset of the JSON data types into a Tree API with a recursive descent parser.
+
+h2. Overview
 
 p. The current implementation uses a Builder pattern to separate "code generation" from parsing.
-In our case, "code generation" is the creation of a tree data structure that reflects JSON arrays and objects and the assignment of JSON values into the data structure.
+In our case, "code generation" is the creation of a data structure that reflects JSON arrays and objects and the assignment of JSON values into the data structure. 
 
-p. Representation of JSON data in C++ is an interesting challenge, we use the "Dynamic C++ library":http://code.google.com/p/dynamic-cpp/ as our data structure and Tree API.
+p. Representation of JSON data in C++ is an interesting challenge, we use the "Dynamic C++ library":http://code.google.com/p/dynamic-cpp/ as our data structure and Tree API. JSON arrays are represented by arrays, and JSON objects are represented by hashmaps.
 
 p. We are using the JSON scanner from the "protoc library":http://sourceforge.net/p/protoc/wiki/Home/ as a Lexer.
+
+p. You can have an overview of the API by looking at the "unit tests":"gsoc-json-parser/tree/master/src/test/parser_test.cpp"
 
 h2. Thanks
 
@@ -23,6 +27,5 @@ p. The required parts of dynamic-cpp and protoc are included in the repository. 
 
 p. The Makefile is incomplete, you will need to create a @bin/@ and an @obj/@ folder in the project. Build has only been tested with g++ on a Linux environment. CMake is coming soon...
 
-p. You can run the unit tests @bin/builder_test@ and @bin/parser_test@
-
+p. You can run the unit tests by typing @bin/builder_test@ and @bin/parser_test@
 

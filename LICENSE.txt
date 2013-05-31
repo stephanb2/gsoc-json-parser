@@ -1,4 +1,5 @@
-This project contains some code that is not provided under the MIT License (MIT)
+This project is released under the MIT/X11 License (MIT/X11). However,
+it contains some code that is not provided under the MIT License (MIT)
 
 This page lists the licenses used, names the authors, and links to the places 
 where it is used.
